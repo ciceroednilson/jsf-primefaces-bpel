@@ -11,16 +11,6 @@
 - Tomcat
 - Soa Suite 12C(BPEL)
 
-### Pacotes necessários para essa aplicação.
-
-- npm install body-parser --save
-- npm install ejs --save
-- npm install express --save
-- npm install express-validator --save
-- npm install socket.io --save
-- npm install nodemon --save
-
-
 ### Pàginas da aplicação.
 
 #### Página incial.
