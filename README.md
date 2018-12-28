@@ -11,7 +11,7 @@
 - Tomcat
 - Soa Suite 12C(BPEL)
 
-### Pàginas da aplicação.
+### Páginas da aplicação.
 
 #### Página incial.
 
