@@ -1,4 +1,4 @@
-## Aplicação JSF consulmindo um serviço criado no BPEL.
+## Aplicação JSF consumindo um serviço criado no BPEL.
 
 ### Executando a aplicação.
 
