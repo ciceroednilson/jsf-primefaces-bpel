@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/ExcluirDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/ExcluirDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="TbPessoaCollection" type="TbPessoaCollection"/>
+   <xs:complexType name="TbPessoaCollection">
+      <xs:sequence>
+         <xs:element name="TbPessoa" type="TbPessoa" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="TbPessoa">
+      <xs:sequence>
+         <xs:element name="idPessoa" type="xs:decimal"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

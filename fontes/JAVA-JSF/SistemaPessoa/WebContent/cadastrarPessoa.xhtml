@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	<ui:composition template="templates/layoutBase.xhtml">
+         
+         <ui:define name="content">
+            
+            <h:form>
+            
+            <p:growl id="growl" life="2000" />
+              
+            <p:panelGrid columns="2">
+				    <f:facet name="header">
+				        Cadastrar Pessoa
+				    </f:facet>
+				 
+				    <h:outputText value="Nome:" />
+				    <p:inputText style="width:300px;" value="#{cadastrarPessoaController.pessoaEntity.nome}" />
+				 
+				     <p:outputLabel for="tipoPessoa" value="Tipo Pessoa:" />
+       				 <p:selectOneMenu id="tipoPessoa" value="#{cadastrarPessoaController.pessoaEntity.tipoPessoa}" style="width:125px">
+           				 <f:selectItem itemLabel="Física" itemValue="F" />
+           				 <f:selectItem itemLabel="Jurídica" itemValue="J" />            
+       				 </p:selectOneMenu>
+				 	
+				 	  &nbsp;
+				 	  <p:commandButton value="Salvar" id="Salvar" update="growl" actionListener="#{cadastrarPessoaController.salvarPessoa}" styleClass="ui-priority-primary" ajax="false"/>	
+				 		
+			  </p:panelGrid>
+              
+              </h:form>
+              
+         </ui:define>
+         			
+     </ui:composition>    
+     
+</html>

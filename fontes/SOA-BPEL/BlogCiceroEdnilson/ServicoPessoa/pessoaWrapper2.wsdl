@@ -1,0 +1,15 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="pessoa"
+     targetNamespace="br.com.ednilson.cicero"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="br.com.ednilson.cicero"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <plnk:partnerLinkType name="Atualizar">
+        <plnk:role name="Pessoa_ptt" portType="tns:Pessoa_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="br.com.ednilson.cicero" location="pessoa.wsdl"/>
+</wsdl:definitions>

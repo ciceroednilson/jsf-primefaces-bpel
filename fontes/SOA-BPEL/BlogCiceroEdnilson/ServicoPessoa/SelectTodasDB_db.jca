@@ -1,0 +1,14 @@
+<adapter-config name="SelectTodasDB" adapter="Database Adapter" wsdlLocation="SelectTodasDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/OracleXe_pessoa" UIConnectionName="OracleXe_pessoa" adapterRef=""/>
+  <endpoint-interaction portType="SelectTodasDB_ptt" operation="SelectTodasDBSelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="SelectTodasDB.TbPessoa"/>
+      <property name="QueryName" value="SelectTodasDBSelect"/>
+      <property name="MappingsMetaDataURL" value="SelectTodasDB-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

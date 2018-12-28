@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<wsdl:definitions
+                name="pessoa"
+     targetNamespace="br.com.ednilson.cicero"
+           xmlns:tns="br.com.ednilson.cicero"
+          xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"     
+          xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  
+  <wsdl:types>
+  
+       <xsd:schema attributeFormDefault="unqualified" 
+                     elementFormDefault="qualified" 
+                        targetNamespace="br.com.ednilson.cicero"
+                              xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+                            xmlns:inter="br.com.ednilson.cicero">
+            
+            <xsd:element name="CadastrarPessoaRequestType">
+                <xsd:complexType>
+                    <xsd:sequence>                        
+                        <xsd:element minOccurs="1" name="nome"         nillable="false" type="xsd:string"/>
+                        <xsd:element minOccurs="1" name="tipoPessoa"   nillable="false" type="xsd:string"/>
+                        <xsd:element minOccurs="1" name="dataCadasto"  nillable="false" type="xsd:dateTime"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <xsd:element name="CadastrarPessoaResponseType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" name="codigoRetorno"   nillable="false" type="xsd:string"/>                        
+                        <xsd:element minOccurs="1" name="mensagemRetorno" nillable="false" type="xsd:string"/>                        
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            
+            <xsd:element name="AlterarPessoaRequestType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" name="codigoPessoa" nillable="false" type="xsd:integer"/>
+                        <xsd:element minOccurs="1" name="nomePessoa"   nillable="false" type="xsd:string"/>
+                        <xsd:element minOccurs="1" name="tipoPessoa"   nillable="false" type="xsd:string"/>
+                        
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            
+            <xsd:element name="AlterarPessoaResponseType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codigoRetorno"   nillable="false" type="xsd:string"/>   
+                        <xsd:element name="mensagemRetorno" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            
+             <xsd:element name="ExcluirPessoaRequestType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" name="codigo" nillable="true" type="xsd:integer"/>                        
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            
+            <xsd:element name="ExcluirPessoaResponseType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="codigoRetorno"   nillable="false" type="xsd:string"/>   
+                        <xsd:element name="mensagemRetorno" nillable="false" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+
+            <xsd:element name="ConsultarPessoasRequestType" type="xsd:string"/>                            
+                        
+            <xsd:element name="ConsultarPessoasResponseType">
+                <xsd:complexType>
+                    <xsd:sequence>                    
+                        <xsd:element name="ListaPessoas">
+                           <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="ItemPessoa" nillable="true" type="inter:pessoaType" minOccurs="0" maxOccurs="unbounded"/>                                                
+                            </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+            <!--ELEMENTO QUE VAMOS ADICIONAR NA LISTA-->
+             <xsd:element name="itemListaPessoa" type="inter:pessoaType"/>                                                
+
+             <xsd:complexType name="pessoaType">
+                  <xsd:sequence>
+                      <xsd:element minOccurs="1" name="codigo"       nillable="false" type="xsd:integer"/>                        
+                      <xsd:element minOccurs="1" name="nome"         nillable="false" type="xsd:string"/>
+                      <xsd:element minOccurs="1" name="tipoPessoa"   nillable="false" type="xsd:string"/>
+                      <xsd:element minOccurs="1" name="dataCadasto"  nillable="false" type="xsd:dateTime"/>
+                  </xsd:sequence>
+             </xsd:complexType>
+
+             <xsd:element name="BuscarPessoaPorCodigoRequestType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" name="codigo" nillable="true" type="xsd:integer"/>                        
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>            
+            
+            <xsd:element name="BuscarPessoaPorCodigoResponseType">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" name="codigo"       nillable="false" type="xsd:integer"/>                        
+                        <xsd:element minOccurs="1" name="nome"         nillable="false" type="xsd:string"/>
+                        <xsd:element minOccurs="1" name="tipoPessoa"   nillable="false" type="xsd:string"/>
+                        <xsd:element minOccurs="1" name="dataCadasto"  nillable="false" type="xsd:dateTime"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            
+      </xsd:schema>
+        
+    
+  </wsdl:types>
+  
+  <wsdl:message name="CadastrarPessoaRequest">
+      <wsdl:part name="parameters" element="tns:CadastrarPessoaRequestType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="CadastrarPessoaResponse">
+      <wsdl:part name="parameters" element="tns:CadastrarPessoaResponseType"/>
+  </wsdl:message>
+  
+  
+  <wsdl:message name="AlterarPessoaRequest">
+      <wsdl:part name="parameters" element="tns:AlterarPessoaRequestType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="AlterarPessoaResponse">
+      <wsdl:part name="parameters" element="tns:AlterarPessoaResponseType"/>
+  </wsdl:message>
+    
+  <wsdl:message name="ExcluirPessoaRequest">
+      <wsdl:part name="parameters" element="tns:ExcluirPessoaRequestType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ExcluirPessoaResponse">
+      <wsdl:part name="parameters" element="tns:ExcluirPessoaResponseType"/>
+  </wsdl:message>    
+  
+  
+  <wsdl:message name="ConsultarPessoasRequest">
+      <wsdl:part name="parameters" element="tns:ConsultarPessoasRequestType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="ConsultarPessoasResponse">
+      <wsdl:part name="parameters" element="tns:ConsultarPessoasResponseType"/>
+  </wsdl:message>    
+  
+  
+  <wsdl:message name="BuscarPessoaPorCodigoRequest">
+      <wsdl:part name="parameters" element="tns:BuscarPessoaPorCodigoRequestType"/>
+  </wsdl:message>
+  
+  <wsdl:message name="BuscarPessoaPorCodigoResponse">
+      <wsdl:part name="parameters" element="tns:BuscarPessoaPorCodigoResponseType"/>
+  </wsdl:message>    
+  
+    
+  <wsdl:portType name="Pessoa_ptt">
+      
+      <wsdl:operation name="CadastrarPessoa" parameterOrder="parameters">
+          <wsdl:input  message="tns:CadastrarPessoaRequest"/>            
+          <wsdl:output message="tns:CadastrarPessoaResponse"/>
+      </wsdl:operation>
+      
+      
+      <wsdl:operation name="AlterarPessoa" parameterOrder="parameters">
+          <wsdl:input  message="tns:AlterarPessoaRequest"/>            
+          <wsdl:output message="tns:AlterarPessoaResponse"/>
+      </wsdl:operation>
+      
+      <wsdl:operation name="ExcluirPessoa" parameterOrder="parameters">
+          <wsdl:input  message="tns:ExcluirPessoaRequest"/>            
+          <wsdl:output message="tns:ExcluirPessoaResponse"/>
+      </wsdl:operation>
+      
+      <wsdl:operation name="ConsultarPessoas" parameterOrder="parameters">
+          <wsdl:input  message="tns:ConsultarPessoasRequest"/>            
+          <wsdl:output message="tns:ConsultarPessoasResponse"/>
+      </wsdl:operation>
+      
+      <wsdl:operation name="BuscarPessoaPorCodigo" parameterOrder="parameters">
+          <wsdl:input  message="tns:BuscarPessoaPorCodigoRequest"/>            
+          <wsdl:output message="tns:BuscarPessoaPorCodigoResponse"/>
+      </wsdl:operation>
+      
+      
+  </wsdl:portType>
+  
+</wsdl:definitions>

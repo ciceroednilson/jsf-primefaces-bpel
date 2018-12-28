@@ -1,0 +1,105 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Sep 08 20:43:35 BRT 2015
+  Author:  cicero
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ConsultarPorID"
+               targetNamespace="http://xmlns.oracle.com/BlogCiceroEdnilson/ServicoPessoa/ConsultarPorID"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/BlogCiceroEdnilson/ServicoPessoa/ConsultarPorID"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="br.com.ednilson.cicero"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/BlogCiceroEdnilson/ServicoPessoa/SelectPorIdDB"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/top/SelectPorIdDB">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="consultarporid_client" partnerLinkType="ns1:ConsultarPorID" myRole="Pessoa_ptt"/>
+    <partnerLink name="SelectPorIdDB" partnerLinkType="ns2:SelectPorIdDB_plt"
+                 partnerRole="SelectPorIdDB_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable"
+              messageType="ns1:BuscarPessoaPorCodigoRequest"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable"
+              messageType="ns1:BuscarPessoaPorCodigoResponse"/>
+    <variable name="Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_InputVariable"
+              messageType="ns2:selectByPrimaryKey_inputParameters"/>
+    <variable name="Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_OutputVariable"
+              messageType="ns2:TbPessoaCollection_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ConsultarPorID.wsdl) -->
+    <receive name="receiveInput" partnerLink="consultarporid_client" portType="ns1:Pessoa_ptt"
+             operation="BuscarPessoaPorCodigo" variable="inputVariable" createInstance="yes"/>
+    <assign name="Assign_seta_id_pessoa_filtro">
+      <copy>
+        <from>$inputVariable.parameters/ns1:codigo</from>
+        <to>$Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_InputVariable.selectByPrimaryKey_inputParameters/ns3:idPessoa</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke_buscar_pessoa_pelo_id" bpelx:invokeAsDetail="no"
+            partnerLink="SelectPorIdDB" portType="ns2:SelectPorIdDB_ptt"
+            operation="selectByPrimaryKey"
+            inputVariable="Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_InputVariable"
+            outputVariable="Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_OutputVariable"/>
+    <assign name="Assign_seta_dados_saida">
+      <copy>
+        <from>$Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_OutputVariable.TbPessoaCollection/ns3:TbPessoa/ns3:idPessoa</from>
+        <to>$outputVariable.parameters/ns1:codigo</to>
+      </copy>
+      <copy>
+        <from>$Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_OutputVariable.TbPessoaCollection/ns3:TbPessoa/ns3:dsNome</from>
+        <to>$outputVariable.parameters/ns1:nome</to>
+      </copy>
+      <copy>
+        <from>$Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_OutputVariable.TbPessoaCollection/ns3:TbPessoa/ns3:flTipo</from>
+        <to>$outputVariable.parameters/ns1:tipoPessoa</to>
+      </copy>
+      <copy>
+        <from>$Invoke_buscar_pessoa_pelo_id_selectByPrimaryKey_OutputVariable.TbPessoaCollection/ns3:TbPessoa/ns3:dtCadastro</from>
+        <to>$outputVariable.parameters/ns1:dataCadasto</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="consultarporid_client" portType="ns1:Pessoa_ptt"
+           operation="BuscarPessoaPorCodigo" variable="outputVariable"/>
+  </sequence>
+</process>

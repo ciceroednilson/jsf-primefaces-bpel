@@ -1,0 +1,35 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/SelectPorIdDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/SelectPorIdDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="TbPessoaCollection" type="TbPessoaCollection"/>
+   <xs:complexType name="TbPessoaCollection">
+      <xs:sequence>
+         <xs:element name="TbPessoa" type="TbPessoa" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="TbPessoa">
+      <xs:sequence>
+         <xs:element name="idPessoa" type="xs:decimal"/>
+         <xs:element name="dsNome" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="100"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="flTipo" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="1"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="dtCadastro" type="xs:dateTime" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="TbPessoaPrimaryKey" type="TbPessoaPrimaryKey"/>
+   <xs:complexType name="TbPessoaPrimaryKey">
+      <xs:sequence>
+         <xs:element name="idPessoa" type="xs:decimal" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

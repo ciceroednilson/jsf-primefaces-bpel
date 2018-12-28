@@ -1,0 +1,15 @@
+<adapter-config name="ExcluirDB" adapter="Database Adapter" wsdlLocation="ExcluirDB.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/DB/OracleXe_pessoa" UIConnectionName="OracleXe_pessoa" adapterRef=""/>
+  <endpoint-interaction portType="ExcluirDB_ptt" operation="delete">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="ExcluirDB.TbPessoa"/>
+      <property name="DmlType" value="delete"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="MappingsMetaDataURL" value="ExcluirDB-or-mappings.xml"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

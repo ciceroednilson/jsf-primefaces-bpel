@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//WebService/cicero/ednilson/com/br/AlterarPessoaRequestType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/AlterarPessoaResponseType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/BuscarPessoaPorCodigoRequestType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/BuscarPessoaPorCodigoResponseType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/CadastrarPessoaRequestType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/CadastrarPessoaResponseType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/ConsultarPessoasResponseType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/ExcluirPessoaRequestType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/ExcluirPessoaResponseType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/PessoaType.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/PessoaWebService.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/PessoaWebServiceLocator.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/Pessoa_ptt.java=UTF-8
+encoding//WebService/cicero/ednilson/com/br/Pessoa_pttBindingStub.java=UTF-8

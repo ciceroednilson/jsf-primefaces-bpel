@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	<ui:composition template="templates/layoutBase.xhtml">
+         
+         <ui:define name="content">
+            
+            <h:form>
+            
+            	<p:growl id="growl" life="2000" />
+            	            		
+				<p:dataTable var="pessoa" value="#{consultarPessoaController.pessoas}">
+					
+					<f:facet name="header">
+				        Consultar Pessoa
+				    </f:facet>
+				    
+    				<p:column headerText="Código" width="50">
+        				<h:outputText value="#{pessoa.codigoPessoa}" />
+    				</p:column> 
+    				
+    				<p:column headerText="Nome"  width="300">
+        				<h:outputText value="#{pessoa.nome}" />
+    				</p:column>
+ 
+    				<p:column headerText="Tipo Pessoa" width="80">
+        				<h:outputText value="#{pessoa.tipoPessoa}" />
+    				</p:column>
+ 
+    				<p:column headerText="Data Cadastro"   width="115">
+        				<h:outputText value="#{pessoa.dataCadasto.time}">
+        				  	<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+        				</h:outputText>
+    				</p:column>
+    				
+    				<p:column headerText="Editar" width="50">
+    					<p:commandButton value="Editar" id="editar" action="#{consultarPessoaController.editarPessoa(pessoa)}" ajax="false" /> 
+    				</p:column>
+    				
+    				<p:column headerText="Excluir" width="50">
+    					<p:commandButton value="Excluir" id="excluir" actionListener="#{consultarPessoaController.excluirPessoa(pessoa)}" ajax="false" />
+    				</p:column>
+    				
+				</p:dataTable>
+         	     
+         
+              
+            </h:form>
+              
+         </ui:define>
+         			
+     </ui:composition>    
+     
+</html>

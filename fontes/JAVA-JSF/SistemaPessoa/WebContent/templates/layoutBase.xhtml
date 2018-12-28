@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"   
+   	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+   <h:head>   
+   
+   		<!-- CARREGANDO ARQUIVO CSS DE LAYOUT -->
+		<h:outputStylesheet library="css" name="layout.css"  />
+						
+   </h:head>
+   <h:body> 
+      	
+      	<!-- HEADER DE TODAS AS PÁGINAS-->
+         <ui:insert name="header" >
+            	            	
+				<h1>Sistema de Cadastro de Pessoas</h1>
+            	<h:form> 
+		    		<p:menubar>        
+		    			<!-- chamando página de cadastro -->
+		        		<p:menuitem value="Cadastrar" url="cadastrarPessoa.xhtml" icon="ui-icon-disk" />
+		        		<!-- chamando página de consulta -->		 				
+		 				<p:menuitem value="Consultar" url="consultarPessoa.xhtml" icon="ui-icon-document"/>
+		   			</p:menubar>
+				</h:form>	
+		
+         </ui:insert> 
+      
+      <br/>
+      	<!-- CONTEUDO QUE DEVE MUDAR A CADA PÁGINA -->
+      	<div style="width: 800px; margin-left: auto; margin-right: auto;">
+         	<ui:insert name="content" >            
+         	</ui:insert>    
+      	 </div>
+      <br/>
+      
+      <!-- FOOTER DE TODAS AS PÁGINAS-->
+      <div style="position: absolute;bottom: 0; text-align:center; width:98%;">
+         <ui:insert name="footer" >
+             www.ciceroednilson.com.br
+         </ui:insert>
+      </div>
+   </h:body>
+</html>

@@ -1,0 +1,21 @@
+<?binding.jca InsertDB_db.jca?>
+<wsdl:definitions name="InsertDB" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/BlogCiceroEdnilson/ServicoPessoa/InsertDB" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/BlogCiceroEdnilson/ServicoPessoa/InsertDB" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertDB">
+    <plt:partnerLinkType name="InsertDB_plt">
+        <plt:role name="InsertDB_role">
+            <plt:portType name="tns:InsertDB_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertDB" schemaLocation="xsd/InsertDB_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="TbPessoaCollection_msg">
+        <wsdl:part name="TbPessoaCollection" element="top:TbPessoaCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="InsertDB_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:TbPessoaCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

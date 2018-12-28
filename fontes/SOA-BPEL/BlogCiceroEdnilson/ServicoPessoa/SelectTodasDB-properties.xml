@@ -1,0 +1,22 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="TB_PESSOA.ID_PESSOA:db_column_not_null">true</entry>
+   <entry key="TB_PESSOA:db_column_3">DT_CADASTRO</entry>
+   <entry key="TB_PESSOA:db_column_2">FL_TIPO</entry>
+   <entry key="TB_PESSOA:db_column_1">DS_NOME</entry>
+   <entry key="TB_PESSOA:db_column_0">ID_PESSOA</entry>
+   <entry key="TB_PESSOA.DT_CADASTRO:db_column_not_null">true</entry>
+   <entry key="TB_PESSOA.ID_PESSOA:db_column_type">NUMBER</entry>
+   <entry key="TB_PESSOA.DS_NOME:db_column_type">VARCHAR2</entry>
+   <entry key="TB_PESSOA.DT_CADASTRO:db_column_type">DATE</entry>
+   <entry key="TB_PESSOA.FL_TIPO:db_column_not_null">true</entry>
+   <entry key="TB_PESSOA:db_table_type">TABLE</entry>
+   <entry key="TB_PESSOA.ID_PESSOA:db_column_precision">0</entry>
+   <entry key="return_single_result_set">true</entry>
+   <entry key="TB_PESSOA.FL_TIPO:db_column_type">CHAR</entry>
+   <entry key="root_descriptor_alias">TB_PESSOA</entry>
+   <entry key="TB_PESSOA.DS_NOME:db_column_size">100</entry>
+   <entry key="TB_PESSOA.FL_TIPO:db_column_size">1</entry>
+   <entry key="TB_PESSOA.DS_NOME:db_column_not_null">true</entry>
+</properties>

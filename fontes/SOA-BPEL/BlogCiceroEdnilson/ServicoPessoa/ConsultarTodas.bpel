@@ -1,0 +1,166 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Wed Sep 09 21:10:26 BRT 2015
+  Author:  cicero
+  Purpose: Synchronous BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="ConsultarTodas"
+               targetNamespace="http://xmlns.oracle.com/BlogCiceroEdnilson/ServicoPessoa/ConsultarTodas"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/BlogCiceroEdnilson/ServicoPessoa/ConsultarTodas"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+               xmlns:ns1="br.com.ednilson.cicero"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/BlogCiceroEdnilson/ServicoPessoa/SelectTodasDB"
+         xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20"
+         xmlns:aia="http://www.oracle.com/XSL/Transform/java/oracle.apps.aia.core.xpath.AIAFunctions"
+         xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+         xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc"
+         xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+         xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+         xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+         xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+         xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk"
+         xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+         xmlns:ns3="http://xmlns.oracle.com/pcbpel/adapter/db/top/SelectTodasDB"
+         xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="consultartodas_client" partnerLinkType="ns1:ConsultarTodas" myRole="Pessoa_ptt"/>
+    <partnerLink name="SelectTodasDB" partnerLinkType="ns2:SelectTodasDB_plt"
+                 partnerRole="SelectTodasDB_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="ns1:ConsultarPessoasRequest"/>
+
+    <!-- Reference to the message that will be returned to the requester-->
+    <variable name="outputVariable" messageType="ns1:ConsultarPessoasResponse"/>
+    <variable name="Invoke_consultar_pessoas_SelectTodasDBSelect_InputVariable"
+              messageType="ns2:SelectTodasDBSelect_inputParameters"/>
+    <variable name="Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable"
+              messageType="ns2:TbPessoaCollection_msg"/>
+    <variable name="var_itemPessoa" element="ns1:itemListaPessoa"/>
+    <variable name="var_ConsultarPessoasResponseType"
+              element="ns1:ConsultarPessoasResponseType">
+      <from><literal><ConsultarPessoasResponseType xmlns="br.com.ednilson.cicero">
+    <ListaPessoas>
+    </ListaPessoas>
+</ConsultarPessoasResponseType></literal></from>
+    </variable>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in ConsultarTodas.wsdl) -->
+    <receive name="receiveInput" partnerLink="consultartodas_client" portType="ns1:Pessoa_ptt"
+             operation="ConsultarPessoas" variable="inputVariable" createInstance="yes"/>
+    <invoke name="Invoke_consultar_pessoas" bpelx:invokeAsDetail="no"
+            partnerLink="SelectTodasDB" portType="ns2:SelectTodasDB_ptt"
+            operation="SelectTodasDBSelect"
+            inputVariable="Invoke_consultar_pessoas_SelectTodasDBSelect_InputVariable"
+            outputVariable="Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable"/>
+    <forEach parallel="no" counterName="var_index"
+             name="ForEach_leitura_dados_retorno">
+      <startCounterValue>1</startCounterValue>
+      <finalCounterValue>ora:countNodes('Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable','TbPessoaCollection','ns3:TbPessoa/ns3:idPessoa')</finalCounterValue>
+      <scope name="Scope1">
+        <variables>
+          <variable name="var_tipo_pessoa" type="xsd:string"/>
+        </variables>
+        <sequence name="Sequence1">
+          <assign name="Assign_seta_dados_retorno">
+            <copy>
+              <from>$Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable.TbPessoaCollection/ns3:TbPessoa[$var_index]/ns3:idPessoa</from>
+              <to>$var_itemPessoa/ns1:codigo</to>
+            </copy>
+            <copy>
+              <from>$Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable.TbPessoaCollection/ns3:TbPessoa[$var_index]/ns3:dtCadastro</from>
+              <to>$var_itemPessoa/ns1:dataCadasto</to>
+            </copy>
+            <copy>
+              <from>$Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable.TbPessoaCollection/ns3:TbPessoa[$var_index]/ns3:dsNome</from>
+              <to>$var_itemPessoa/ns1:nome</to>
+            </copy>
+            <copy>
+              <from>$Invoke_consultar_pessoas_SelectTodasDBSelect_OutputVariable.TbPessoaCollection/ns3:TbPessoa[$var_index]/ns3:flTipo</from>
+              <to>$var_tipo_pessoa</to>
+            </copy>
+          </assign>
+          <if name="If_verifica_tipo_pessoa">
+            <documentation>
+              <![CDATA[Se Pessoa Física]]>
+            </documentation>
+            <condition>$var_tipo_pessoa = 'F'</condition>
+            <assign name="Assign_seta_pessoa_fisica">
+              <copy>
+                <from>'Física'</from>
+                <to>$var_itemPessoa/ns1:tipoPessoa</to>
+              </copy>
+            </assign>
+            <else>
+              <documentation>
+                <![CDATA[Jurídica]]>
+              </documentation>
+              <assign name="Assign_seta_pessoa_juridica">
+                <copy>
+                  <from>'Jurídica'</from>
+                  <to>$var_itemPessoa/ns1:tipoPessoa</to>
+                </copy>
+              </assign>
+            </else>
+          </if>
+          <assign name="Assign_adiciona_item_pessoa_lista">
+            <extensionAssignOperation>
+              <bpelx:append>
+                <bpelx:from>$var_itemPessoa</bpelx:from>
+                <bpelx:to>$var_ConsultarPessoasResponseType/ns1:ListaPessoas</bpelx:to>
+              </bpelx:append>
+            </extensionAssignOperation>
+          </assign>
+        </sequence>
+      </scope>
+    </forEach>
+    <assign name="Assign_seta_valor_output">
+      <copy>
+        <from>$var_ConsultarPessoasResponseType</from>
+        <to>$outputVariable.parameters</to>
+      </copy>
+    </assign>
+    <!-- Generate reply to synchronous request -->
+    <reply name="replyOutput" partnerLink="consultartodas_client" portType="ns1:Pessoa_ptt"
+           operation="ConsultarPessoas" variable="outputVariable"/>
+  </sequence>
+</process>

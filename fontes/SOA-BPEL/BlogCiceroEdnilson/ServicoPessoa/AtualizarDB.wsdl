@@ -1,0 +1,21 @@
+<?binding.jca AtualizarDB_db.jca?>
+<wsdl:definitions name="AtualizarDB" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/BlogCiceroEdnilson/ServicoPessoa/AtualizarDB" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/BlogCiceroEdnilson/ServicoPessoa/AtualizarDB" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/AtualizarDB">
+    <plt:partnerLinkType name="AtualizarDB_plt">
+        <plt:role name="AtualizarDB_role">
+            <plt:portType name="tns:AtualizarDB_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/AtualizarDB" schemaLocation="xsd/AtualizarDB_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="TbPessoaCollection_msg">
+        <wsdl:part name="TbPessoaCollection" element="top:TbPessoaCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="AtualizarDB_ptt">
+        <wsdl:operation name="update">
+            <wsdl:input message="tns:TbPessoaCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
